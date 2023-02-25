@@ -19,7 +19,10 @@ function getParameterByName(name) {
 
 function makeListItems(key, val) {
 	var items = [];
-
+	if (key == "id")
+	{
+		items.push("\n");
+	}
 	items.push(key + ', ');
 
 	$.each(val, function(key, val) {
@@ -27,6 +30,11 @@ function makeListItems(key, val) {
 			items.push(makeListItems(key, val));
 		} else {
 			items.push(key + ', ' + val + ',');
+		}
+		if (key == "id")
+		{
+			items.push("\n");
+			console.log("yes");
 		}
 	});
 
@@ -59,13 +67,13 @@ $(global).ready(function() {
 
 		// Build the list
 		items.push(makeListItems(title, data.loans));
-        fs.appendFile("kiva.csv", makeListItems(title, data.loans), (err) => {
+        fs.appendFile("outputs/kiva.csv", makeListItems(title, data.loans), (err) => {
             if (err) {
               console.log(err);
             }
             else {
               // Get the file contents after the append operation
-                fs.readFileSync("kiva.csv", "utf8");
+                fs.readFileSync("outputs/kiva.csv", "utf8");
             }
           });
 	});

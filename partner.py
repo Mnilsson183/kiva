@@ -10,7 +10,7 @@ status, response = http.request('http://api.kivaws.org/v1/partners.html')
 soup = BeautifulSoup(response, "lxml")
 lines=[]
 # establish the connection to the sqlite db
-conn = sqlite3.connect('kiva.db')
+conn = sqlite3.connect('outputs/kiva.db')
 c = conn.cursor()
 
 c.execute('''CREATE TABLE IF NOT EXISTS partners (
