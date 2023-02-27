@@ -3,7 +3,7 @@ import sqlite3
 from bs4 import BeautifulSoup
 from lxml.html import tostring, html5parser
 http = httplib2.Http()
-status, response = http.request('http://api.kivaws.org/v1/partners.html')
+status, response = http.request('http://api.kivaws.org/v1/partners')
 #use beautiful soup to parse 
 # soup = BeautifulSoup(response)
 # if you have lxml installed then uncomment and use the next line
@@ -24,7 +24,7 @@ for partner in soup.find_all('tr')[1:]:
 	for td in partner:
 		# i dont want all the data so purposefully limit the rows
 		if(count < 19):
-			text=td.renderContents().decode('utf-8')
+			text = td.renderContents().decode('utf-8')
 			# test=td.encode_contents().decode('utf-8')
 			if text == '':
 				text = 'NULL'
