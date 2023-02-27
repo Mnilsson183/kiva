@@ -12,8 +12,12 @@ lines=[]
 conn = sqlite3.connect('outputs/kiva.db')
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS loans (
-id int primary key, name varchar(100), location varchar(100), activity varchar(100), number_of_borrowers int, 
-paid int, loan_amount int)''');
+id int primary key, name varchar(100), status varchar(100), funded_amount int, basket_amount int, 
+paid_amount int, video varchar(100), activity varchar(200), sector varchar(100), themes varchar(100),
+use varchar(400), delinquent varchar(50), partner_id int, posted_date varchar(100), planned_expiration_date varchar(100),
+loan_amount int, lender_count int, currency_exchange_loss_amount int, bonus_credit_eligibility varchar(10), funded_date varchar(100),
+paid_date varchar(100), arrears_amount int
+)''');
 i = 100
 while True:
 	if (i > 300):
@@ -25,7 +29,7 @@ while True:
 	for partner in soup.find_all('tr')[1:]:
 		for td in partner:
 			# i dont want all the data so purposefully limit the rows
-			if(count < 7):
+			if(count < 22):
 				try:
 					text = td.renderContents().decode('utf-8')
 				except AttributeError:
@@ -36,9 +40,15 @@ while True:
 				lines.append(text)
 			count += 1
 		c.execute('''INSERT OR REPLACE INTO loans (
-			id, name, location, activity, number_of_borrowers, 
-			paid, loan_amount
+			id, name, status, funded_amount, basket_amount, 
+paid_amount, video, activity, sector, themes,
+use, delinquent, partner_id, posted_date, planned_expiration_date,
+loan_amount, lender_count, currency_exchange_loss_amount, bonus_credit_eligibility, funded_date,
+paid_date, arrears_amount
 			) VALUES (
+				?,?,?,?,?,
+				?,?,?,?,?,
+				?,?,?,?,?,
 				?,?,?,?,?,
 				?,?
 			)''', lines);
