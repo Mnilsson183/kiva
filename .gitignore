@@ -1,2 +1,4 @@
 /node_modules
 /outputs/kiva.db
+loans.csv
+partners.csv
