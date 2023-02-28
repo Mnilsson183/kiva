@@ -20,7 +20,7 @@ paid_date varchar(100), arrears_amount int
 )''');
 i = 100
 while True:
-	if (i > 300):
+	if (i > 700):
 		break
 	status, response = http.request('http://api.kivaws.org/v1/loans/' + str(i))
 	count = 0
